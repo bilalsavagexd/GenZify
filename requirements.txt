@@ -9,3 +9,4 @@ pillow
 numpy
 opencv-python
 ffmpeg-python==0.2.0
+pydub

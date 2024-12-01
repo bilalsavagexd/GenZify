@@ -108,23 +108,18 @@ class VideoGenerator:
             self.current_step = 0.4
             update_progress("Generating video frames...")
             
-            # Get audio duration and calculate timing
+            # Get precise audio duration
             audio_duration = self._get_audio_duration(audio_file)
             words = self._chunk_into_words(text_content)
             total_words = len(words)
             
-            # Calculate time per word
-            time_per_word = audio_duration / total_words
-            frames_per_word = int(time_per_word * self.fps)
+            # Calculate precise timing
+            frames_per_second = self.fps
+            total_frames = int(audio_duration * frames_per_second)
+            words_per_second = total_words / audio_duration
+            frames_per_word = frames_per_second / words_per_second
             
-            # Generate frames
-            cap = cv2.VideoCapture(self.background_video)
-            fps = self.fps
-            total_frames = int(audio_duration * fps)
-            
-            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-            out = cv2.VideoWriter(temp_output, fourcc, fps, (self.width, self.height))
-
+            # Generate frames with precise timing
             frame_count = 0
             word_index = 0
             
@@ -137,7 +132,7 @@ class VideoGenerator:
                 # Process frame to fit 9:16 without stretching
                 frame = self._process_background_frame(frame)
                 
-                # Calculate current word index based on frame timing
+                # Update word index based on precise timing
                 word_index = min(int(frame_count / frames_per_word), total_words - 1)
                 
                 # Get words to display

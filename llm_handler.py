@@ -22,7 +22,7 @@ class LLMHandler:
             while time.time() - start_time < timeout:
                 try:
                     response = self.client.chat.completions.create(
-                        model="mixtral-8x7b-32768",  # or your preferred Groq model
+                        model="llama-3.1-70b-versatile",  # or your preferred Groq model
                         messages=messages,
                         max_tokens=500,
                         temperature=0.7
@@ -46,7 +46,7 @@ class LLMHandler:
             system_prompt = """You are a helpful assistant."""
             if genzify:
                 system_prompt = """You are a Gen Z expert who responds in Gen Z style language. 
-                Use emojis, slang, and casual tone while keeping the information accurate."""
+                Use emojis, slang, and casual tone while keeping the information accurate.Make it as much Genz Language like as possible"""
 
             messages = [
                 {"role": "system", "content": system_prompt},
@@ -54,7 +54,7 @@ class LLMHandler:
             ]
 
             response = self.client.chat.completions.create(
-                model="mixtral-8x7b-32768",
+                model="llama-3.1-70b-versatile",
                 messages=messages,
                 max_tokens=500,
                 temperature=0.7
