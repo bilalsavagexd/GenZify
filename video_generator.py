@@ -108,6 +108,20 @@ class VideoGenerator:
             self.current_step = 0.4
             update_progress("Generating video frames...")
             
+            # Initialize video capture
+            cap = cv2.VideoCapture(self.background_video)
+            if not cap.isOpened():
+                raise Exception("Error: Could not open background video")
+
+            # Set up video writer
+            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+            out = cv2.VideoWriter(
+                temp_output,
+                fourcc,
+                self.fps,
+                (self.width, self.height)
+            )
+
             # Get precise audio duration
             audio_duration = self._get_audio_duration(audio_file)
             words = self._chunk_into_words(text_content)
@@ -162,6 +176,7 @@ class VideoGenerator:
                 sub_progress = frame_count / total_frames
                 update_progress("Generating video frames...", sub_progress)
 
+            # Clean up
             cap.release()
             out.release()
 
@@ -190,11 +205,11 @@ class VideoGenerator:
             return final_output
 
         except Exception as e:
-            # Clear progress indicators on error
-            if 'progress_bar' in locals():
-                progress_bar.empty()
-            if 'status_text' in locals():
-                status_text.empty()
+            # Clean up in case of error
+            if 'cap' in locals():
+                cap.release()
+            if 'out' in locals():
+                out.release()
             raise Exception(f"Error generating video: {str(e)}")
 
     def _chunk_into_words(self, text):
