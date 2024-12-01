@@ -28,10 +28,7 @@ Imagine a world where your lecture notes are so entertaining, You forget your st
   - Content extraction
 
 ### Text-to-Speech 🗣️
-- **gTTS (Google Text-to-Speech)**
-  - Text to audio conversion
-  - Multiple language support
-  - Speech synthesis
+- **ELEVEN LAB**
 
 ### Video Processing 🎥
 - **OpenCV (cv2)**
