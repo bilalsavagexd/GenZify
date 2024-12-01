@@ -1,4 +1,4 @@
-# GenZify
+# GenZify 🧠
 
 ## 🌟 **Introduction**  
 Imagine a world where your lecture notes are so entertaining, You forget your studying!
